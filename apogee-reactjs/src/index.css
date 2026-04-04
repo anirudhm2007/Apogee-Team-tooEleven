@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: Consolas, Menlo, Monaco, monospace;
+  background: #0a0a0f;
+  color: #e5e7eb;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.apogee-card {
+  background: rgba(18, 18, 26, 0.8);
+  border: 1px solid #2b2b3c;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.neon-text {
+ 
+}
