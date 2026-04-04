@@ -7,53 +7,67 @@ A backend service for a hospital queue management system. It integrates real-tim
 ## Team Name: tooEleven
 ### Team Members:
 1. Anirudh Madhavan
-2. ⁠Jainil Rathwa
-3. ⁠Palksh Upadhyay
+2. Jainil Rathwa
+3. Palksh Upadhyay
 
 ## Features:
 
 ###  Patient Side
+- Role-based authentication (Login/Signup).
 - Get a token instantly via manual entry.
 - Real-time queue position and status updates.
-- AI-powered estimated wait time with live countdown timer (ticks down every second)
-- Floating AI chatbot for hospital info (timings, doctors, fees, directions)  
+- View complete medical history (past consultations, diagnoses, medicines, and conclusions).
+- AI-powered estimated wait time with live countdown timer (ticks down every second).
+- Floating AI chatbot for hospital info (timings, doctors, fees, directions).  
+
+---
+
+###  Doctor Side
+- Role-based authentication (Login/Signup with Department matching).
+- Live, department-specific waiting queue.
+- "Call Next" functionality to automatically call the next patient in line.
+- Active consultation portal to record diagnosis, suggested medicines, and conclusions directly to the patient's record.
+- Instant access to the current patient's previous medical records and history.
+- View a history log of all past patients seen by the doctor.
 
 ---
 
 ###  Admin Side
-- Call next patient per department  
-- Assign doctor and room to current patient  
-- Mark consultation as complete  
+- Role-based authentication (Login/Signup).
+- Call / manage specific tokens manually.
+- Assign specific doctors and rooms to current patients.
+- Mark consultations as complete.
 - Live dashboard stats:
   - Waiting patients  
   - Patients in consultation  
   - Average wait time  
   - Average consultation time  
+- **Danger Zone:** Instantly clear all active queues, end consultations, delete glitchy tokens, and reset system averages to baseline (13 mins).
 
 ---
 
 ###  Display Board
-- Live queue board for all departments  
-- Real-time notifications when patients are called.
+- Live queue board for all departments.
+- Real-time visual and text notifications when patients are called.
 - Currently serving patient per department.
 - Waiting queue with predicted wait times.
 
 ---
 
 ###  AI Features
-- **Wait Time Prediction** (Groq LLaMA + fallback logic)  
-- **Hospital Chatbot** (doctors, timings, fees, directions)  
-- **Strict Scoping** (rejects irrelevant queries)  
-- **Receptionist Fallback** (every reply includes contact info)  
+- **Wait Time Prediction** (AI prediction with formula-based fallback logic).
+- **Hospital Chatbot** (Live context of registered doctors, timings, fees, directions).
+- **Strict Scoping** (Nurse Joy persona rejects irrelevant queries like coding, math, general knowledge).
+- **Receptionist Fallback** (Directs to reception for emergencies or system failures).
 
 ---
 
 ## Tech Stack
 
-- Frontend: React.js, CSS
-- Backend: Node.js + Express.js  
-- Database: MongoDB  
-- AI/ML: Groq API (AI Assistant Chatbot)  
+- **Frontend:** React.js, Tailwind CSS 
+- **Backend:** Node.js + Express.js, Socket.IO (Real-time socket events)
+- **Database:** MongoDB 
+- **AI/ML:** Groq API (llama-3.1-8b-instant for Chatbot)
 
 ---
 
@@ -62,23 +76,19 @@ A backend service for a hospital queue management system. It integrates real-tim
 1. Clone the repository
 
 2. Setup and start the backend:
-
+<pre>
 cd apogee-server
 npm install
 create .env file with: MONGO_URI=mongodb://localhost:27017/apogee and GROQ_API_KEY=your_key
 npm start
+</pre>
 
 3. Setup and start the frontend:
-
+<pre>
 cd apogee-reactjs
 npm install
 create .env file with: REACT_APP_API_URL=http://localhost:5000
 npm start
+</pre>
 
 4. Open http://localhost:3000 in your browser
-
----
-
-##  Notes
-- Designed for hackathons & rapid prototyping.
-- Focused on simplicity, real-time performance, and practical AI integration.
