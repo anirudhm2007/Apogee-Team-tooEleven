@@ -1,6 +1,5 @@
 const Department = require("../models/Department");
 const Token = require("../models/Token");
-const { predictWaitTime } = require("./aiPredictionService");
 
 function buildSuggestion(waitMins) {
   if (waitMins <= 5) return "Your turn is very close. Please stay nearby.";
