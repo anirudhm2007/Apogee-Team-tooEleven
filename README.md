@@ -42,7 +42,7 @@ A backend service for a hospital queue management system. It integrates real-tim
   - Patients in consultation  
   - Average wait time  
   - Average consultation time  
-- **Danger Zone:** Instantly clear all active queues, end consultations, delete glitchy tokens, and reset system averages to baseline (13 mins).
+- **Danger Zone:** Instantly clear all active queues, end consultations, delete glitchy tokens, and reset system averages to baseline.
 
 ---
 
