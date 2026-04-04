@@ -59,22 +59,23 @@ A backend service for a hospital queue management system. It integrates real-tim
 
 ##  Installation & Setup
 
-1. Clone the repository  
-   git clone https://github.com/anirudhm2007/Apogee-Team-tooEleven.git  
+1. Clone the repository
 
-2. Navigate into the project  
-   cd apogee  
+2. Setup and start the backend:
 
-3. Install dependencies  
-   npm install  
+cd apogee-server
+npm install
+create .env file with: MONGO_URI=mongodb://localhost:27017/apogee and GROQ_API_KEY=your_key
+npm start
 
-4. Create a `.env` file in root:
+3. Setup and start the frontend:
 
-   GROQ_API_KEY = your_groq_api_key_here  
-   PORT=3000  
+cd apogee-reactjs
+npm install
+create .env file with: REACT_APP_API_URL=http://localhost:5000
+npm start
 
-5. Start the server  
-   npm start  
+4. Open http://localhost:3000 in your browser
 
 ---
 
