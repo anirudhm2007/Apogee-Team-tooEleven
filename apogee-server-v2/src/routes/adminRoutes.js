@@ -4,7 +4,7 @@ const Token = require("../models/Token");
 const { recalculateDepartmentQueue, getQueueOverview, getDashboardStats } = require("../services/queueService");
 const { emitRealtimeState } = require("../services/events");
 const { getIO } = require("../config/socket");
-
+const Department = require("../models/Department");
 
 async function broadcastState(io, token = null) {
   const [queueOverview, stats] = await Promise.all([getQueueOverview(), getDashboardStats()]);
@@ -93,6 +93,40 @@ router.post("/complete", async (req, res, next) => {
     res.json({ message: "Consultation completed", token });
   } catch (err) {
     next(err);
+  }
+});
+
+// NEW ROUTE: Clear entirely
+router.post("/clear-all", async (req, res) => {
+  try {
+    // 1. Mark all active tokens as Completed
+    await Token.updateMany(
+      { status: { $in: ["Waiting", "In Consultation"] } },
+      { 
+        $set: { 
+          status: "Completed", 
+          consultationCompletedAt: new Date(),
+          smartSuggestion: "Consultation ended by administrator."
+        } 
+      }
+    );
+
+    // 2. Recalculate queues for all departments so the system knows it's empty
+    const departments = await Department.find();
+    for (const dept of departments) {
+      await recalculateDepartmentQueue(dept.code);
+    }
+
+    // 3. Emit live socket update to all connected screens
+    const [queueOverview, stats] = await Promise.all([getQueueOverview(), getDashboardStats()]);
+    emitRealtimeState(getIO(), { queueOverview, stats });
+    
+    // Send a notification to the Display board
+    getIO().emit("notification", { tokenId: "ADMIN", message: "All queues have been reset." });
+
+    res.json({ message: "System queues successfully cleared." });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to clear queues", error: err.message });
   }
 });
 

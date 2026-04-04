@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -7,7 +8,9 @@ const departmentRoutes = require("./routes/departmentRoutes");
 const patientRoutes = require("./routes/patientRoutes");
 const queueRoutes = require("./routes/queueRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-// const aiRoutes = require("./routes/aiRoutes");
+const authRoutes = require("./routes/authRoutes");
+const doctorRoutes = require("./routes/doctorRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 
@@ -35,11 +38,13 @@ app.get("/health", (req, res) =>
   res.json({ status: "ok", timestamp: new Date() }),
 );
 
+app.use("/api/auth", authRoutes);
+app.use("/api/doctor", doctorRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/queue", queueRoutes);
 app.use("/api/admin", adminRoutes);
-// app.use("/api/ai",          aiRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

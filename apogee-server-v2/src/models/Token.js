@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const tokenSchema = new mongoose.Schema(
   {
     tokenId: { type: String, required: true, unique: true },
+    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', default: null }, // ← NEW
     patientName: { type: String, default: "Walk-in Patient" },
     departmentCode: { type: String, required: true },
     departmentName: { type: String, required: true },
@@ -10,7 +11,7 @@ const tokenSchema = new mongoose.Schema(
     status: { type: String, enum: ["Waiting", "In Consultation", "Completed"], default: "Waiting" },
     queuePosition: { type: Number, default: 0 },
     predictedWaitMins: { type: Number, default: 0 },
-    predictionSource: { type: String, enum: ["ai", "fallback"], default: "fallback" }, // ← NEW
+    predictionSource: { type: String, enum: ["ai", "fallback"], default: "fallback" }, 
     smartSuggestion: { type: String, default: "" },
     assignedDoctor: { type: String, default: "" },
     assignedRoom: { type: String, default: "" },
