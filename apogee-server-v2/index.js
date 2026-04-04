@@ -6,7 +6,7 @@ const os = require("os");
 const app = require("./src/app");
 const connectDB = require("./src/config/db");
 const { initSocket } = require("./src/config/socket");
-const { seedInitialData } = require("./src/services/seedService");
+// const { seedInitialData } = require("./src/services/seedService");
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,7 +23,7 @@ const printNetworkURLs = () => {
 
 const start = async () => {
   await connectDB();
-  await seedInitialData();
+  // await seedInitialData();
 
   const server = http.createServer(app);
   initSocket(server);
